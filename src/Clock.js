@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
-
 function Clock() {
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
-    setInterval(() => {
-      setTime(new Date());
+    const timerID = setInterval(() => {
+      setTime(time);
     }, 1000);
+
+    // returning a cleanup function
+    return function cleanup() {
+      clearInterval(timerID);
+    };
   }, []);
 
   return <div>{time.toString()}</div>;
